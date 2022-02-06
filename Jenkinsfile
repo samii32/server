@@ -129,7 +129,7 @@ pipeline{
 
                 dir ('./nodejs'){
                     sh """
-                    docker build . -t server --build-arg env=${PROD}
+                    sudo docker build . -t server --build-arg env=${PROD}
                     """
                 }
             }
@@ -148,8 +148,8 @@ pipeline{
 
                 dir ('./nodejs') {
                     sh '''
-                    docker rm -f $(docker ps -aq)
-                    docker run -p 80:80 -d server
+                    sudo docker rm -f $(docker ps -aq)
+                    sudo docker run -p 80:80 -d server
                     '''
                 }
             }
