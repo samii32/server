@@ -105,7 +105,9 @@ pipeline{
         }
 
         stage('Test Backend') {
-            echo '$(which docker)'
+            sh '''
+            export PATH=$PATH:/snap/bin
+            '''
             agent {
                 docker {
                     image 'node:latest'
