@@ -105,9 +105,7 @@ pipeline{
         }
 
         stage('Test Backend') {
-            sh '''
-            which docker
-            '''
+            echo $(which docker)
             agent {
                 docker {
                     image 'node:latest'
