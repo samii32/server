@@ -19,7 +19,12 @@ pipeline{
             agent any
 
             steps {
-                
+                echo '''
+                $(which docker)
+                '''
+                sh '''
+                export PATH=$PATH:/snap/bin
+                '''
                 echo 'Clonning Repository'
 
                 git url: 'https://github.com/samii32/server.git',
@@ -105,9 +110,6 @@ pipeline{
         }
 
         stage('Test Backend') {
-            sh '''
-            export PATH=$PATH:/snap/bin
-            '''
             agent {
                 docker {
                     image 'node:latest'
