@@ -19,13 +19,10 @@ pipeline{
             agent any
 
             steps {
-                echo '''
-                $(which docker)
-                '''
                 sh '''
                 export PATH=$PATH:/snap/bin
                 '''
-                echo 'Clonning Repository'
+                echo 'Clonning Repository $(which docker)'
 
                 git url: 'https://github.com/samii32/server.git',
                     branch: 'master',
