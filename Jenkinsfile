@@ -86,11 +86,7 @@ pipeline{
 
         stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
-            agent {
-                docker {
-                    image 'node:latest'
-                }
-            }
+            agent any
 
             steps {
                 dir ('.'){
@@ -103,11 +99,7 @@ pipeline{
         }
 
         stage('Test Backend') {
-            agent {
-                docker {
-                    image 'node:latest'
-                }
-            }
+            agent any
 
             steps {
                 echo 'Test backend'
