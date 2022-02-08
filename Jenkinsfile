@@ -39,6 +39,18 @@ pipeline{
                 }
             }
         }
+
+        // stage('Only for production') {
+        //     when {
+        //         branch 'production'
+        //         environment name: 'APP_ENV', value: 'prod'
+        //         anyOf {
+        //             environment name: 'DEPLOY_TO', value: 'production'
+        //             environment name: 'DEPLOY_TO', value: 'staging'
+        //         }
+        //     }
+        // }
+
         // aws s3에 파일을 올림
         stage('Deploy Frontend') {
             steps {
@@ -74,7 +86,11 @@ pipeline{
 
         stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
-            agent any
+            agent {
+                docker {
+                    image 'node:latest'
+                }
+            }
 
             steps {
                 dir ('.'){
@@ -87,11 +103,15 @@ pipeline{
         }
 
         stage('Test Backend') {
-            agent any
+            agent {
+                docker {
+                    image 'node:latest'
+                }
+            }
 
             steps {
                 echo 'Test backend'
-                dir ('.') {
+                dir ('./nodejs') {
                     sh '''
                     npm install&&
                     npm run test.js
@@ -104,9 +124,9 @@ pipeline{
             agent any
             steps {
                 echo 'Build Backend'
-                dir ('.'){
+                dir ('./'){
                     sh """
-                    docker build -t node:server .
+                    sudo docker build -t node:server .
                     """
                 }
             }
@@ -123,7 +143,7 @@ pipeline{
             steps {
                 echo 'Build Backend'
 
-                dir ('.') {
+                dir ('./nodejs') {
                     sh '''
                     docker run -p 80:80 -d node:server
                     '''
