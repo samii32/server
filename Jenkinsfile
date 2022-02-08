@@ -86,32 +86,24 @@ pipeline{
 
         stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
-            agent {
-                docker {
-                    image 'node:latest'
-                }
-            }
+            agent any
 
             steps {
-                dir ('./nodejs'){
+                dir ('.'){
                     sh '''
                     npm install&&
-                    sudo npx eslint server.js --fix
+                    npx eslint server.js --fix
                     '''
                 }
             }
         }
 
         stage('Test Backend') {
-            agent {
-                docker {
-                    image 'node:latest'
-                }
-            }
+            agent any
 
             steps {
                 echo 'Test backend'
-                dir ('./nodejs') {
+                dir ('.') {
                     sh '''
                     npm install&&
                     npm run test.js
@@ -124,7 +116,7 @@ pipeline{
             agent any
             steps {
                 echo 'Build Backend'
-                dir ('./'){
+                dir ('.'){
                     sh """
                     docker build -t node:server .
                     """
@@ -143,7 +135,7 @@ pipeline{
             steps {
                 echo 'Build Backend'
 
-                dir ('./nodejs') {
+                dir ('.') {
                     sh '''
                     docker run -p 80:80 -d node:server
                     '''
