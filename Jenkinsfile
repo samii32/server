@@ -96,7 +96,7 @@ pipeline{
                 dir ('./nodejs'){
                     sh '''
                     npm install&&
-                    npx eslint server.js --fix
+                    sudo npx eslint server.js --fix
                     '''
                 }
             }
