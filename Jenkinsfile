@@ -124,9 +124,9 @@ pipeline{
             agent any
             steps {
                 echo 'Build Backend'
-                dir ('./'){
+                dir ('.'){
                     sh """
-                    sudo docker build -t node:server .
+                    docker build -t node:server .
                     """
                 }
             }
