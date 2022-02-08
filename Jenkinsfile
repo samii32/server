@@ -92,7 +92,7 @@ pipeline{
                 dir ('.'){
                     sh '''
                     npm install&&
-                    npx eslint server.js --fix
+                    /usr/local/bin/npx eslint server.js --fix
                     '''
                 }
             }
