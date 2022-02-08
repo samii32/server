@@ -7,6 +7,7 @@ app.use(cors());
 const server = app.listen(3000, () => {
     console.log('Start Server: localhost:3000');
 });
+console.log(server)
 
 app.get('/', function (req, res) {
     res.send('hello world')
@@ -31,6 +32,7 @@ app.post('/db', function (req, res) {
         if (err) throw err;
 
         connection.query('SELECT * from user', function (error, results, fields) {
+            console.log(fields)
             res.send(JSON.stringify(results));
             connection.release();
         
