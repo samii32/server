@@ -83,7 +83,8 @@ pipeline{
                 }
             }
         }
-stage('Lint Backend') {
+        
+        stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
             agent {
                 docker {
@@ -118,7 +119,7 @@ stage('Lint Backend') {
                 }
             }
         }
-        
+
         stage('Build Backend') {
             agent any
             steps {
