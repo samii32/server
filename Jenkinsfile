@@ -39,7 +39,6 @@ pipeline{
                 }
             }
         }
-
         // aws s3에 파일을 올림
         stage('Deploy Frontend') {
             steps {
