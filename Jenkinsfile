@@ -19,11 +19,7 @@ pipeline{
             agent any
 
             steps {
-                sh '''
-                export PATH=$PATH:/snap/bin
-                '''
-                echo 'Clonning Repository $(which docker)'
-
+                echo 'Clonning Repository'
                 git url: 'https://github.com/samii32/server.git',
                     branch: 'master',
                     credentialsId: 'tokenforjenkins'
@@ -87,8 +83,7 @@ pipeline{
                 }
             }
         }
-
-        stage('Lint Backend') {
+stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
             agent {
                 docker {
@@ -123,15 +118,14 @@ pipeline{
                 }
             }
         }
-
-        stage('Buld Backend') {
+        
+        stage('Build Backend') {
             agent any
             steps {
                 echo 'Build Backend'
-
-                dir ('./nodejs'){
+                dir ('./'){
                     sh """
-                    sudo docker build . -t server --build-arg env=${PROD}
+                    docker build -t node:server .
                     """
                 }
             }
@@ -150,8 +144,7 @@ pipeline{
 
                 dir ('./nodejs') {
                     sh '''
-                    sudo docker rm -f $(docker ps -aq)
-                    sudo docker run -p 80:80 -d server
+                    docker run -p 80:80 -d node:server
                     '''
                 }
             }

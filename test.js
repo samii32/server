@@ -5,7 +5,7 @@ const email = {
     port: 587,
     auth: {
         user: "smile_666@naver.com",
-        pass: "skehahffk2^^"
+        pass: "skehahffk2!!"
     }
 }
 const send = async (option) => {
@@ -21,7 +21,7 @@ const send = async (option) => {
 
 let data = {
     from: 'smile_666@naver.com',
-    to: 'shk9310@gmail.com',
+    to: 'smile_666@naver.com',
     subject: 'test mail',
     text: 'node.js mail test'
 }
