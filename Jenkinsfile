@@ -125,7 +125,7 @@ pipeline{
                     sh """
                         docker container prune -f
                         if [ \$(docker images | grep '<none>' | wc -l) -gt 0 ]; then 
-                            docker rmi \$(docker images -a --format "{{.ID}} {{.Repository}} {{.Tag}}" | grep '<none>' | sed -E 's/(.*) <none> <none>(.*)/\\1/')
+                            docker rmi \$(docker images -a --format "{{.ID}} {{.Repository}} {{.Tag}}" | grep '<none>' | sed -E 's/(.*) <none> <none>(.*)/\\1/') || echo 'hello world'
                         fi
                         docker build -t node:server .
                     """
