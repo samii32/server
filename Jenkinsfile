@@ -70,13 +70,13 @@ pipeline{
                 success {
                     echo 'Successfully Cloned Repository..'
 
-                    mail to: 'shk9310@gmail.com',
+                    mail to: 'smile_666@naver.com',
                          subject: "Deploy Fronted Success",
                          body: "Successfully deployed fronted!"
                 }
                 failure {
                     echo 'I failed :('
-                    mail to: 'shk9310@gmail.com',
+                    mail to: 'smile_666@naver.com',
                          subject: "Failed Pipeline",
                          body: "Something is wrong with deploy frontend"
                 
