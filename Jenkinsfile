@@ -110,7 +110,7 @@ pipeline{
                 dir ('.') {
                     sh '''
                     npm install&&
-                    node server.js
+                    node test.js
                     '''
                 }
             }
