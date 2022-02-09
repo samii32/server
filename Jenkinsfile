@@ -122,8 +122,8 @@ pipeline{
                 echo 'Build Backend'
                 dir ('.'){
                     sh """
-                    docker rmi $(docker images | grep "^<none>")
-                    docker build -t node:server .
+                        docker rmi $(docker images | grep "^<none>")
+                        docker build -t node:server .
                     """
                 }
             }
