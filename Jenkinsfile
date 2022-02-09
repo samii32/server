@@ -123,7 +123,7 @@ pipeline{
                 dir ('.'){
                     sh """
                         if [ \$(docker images | grep '<none>' | wc -l) -gt 0 ]; then 
-                            docker rmi \$(docker images | grep '<none>')
+                            docker rmi \$(docker images --format "{{.ID}} {{.Repository}} {{.Tag}}" | grep '<none>')
                         fi
                         docker build -t node:server .
                     """
