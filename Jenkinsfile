@@ -107,10 +107,10 @@ pipeline{
 
             steps {
                 echo 'Test backend'
-                dir ('./nodejs') {
+                dir ('.') {
                     sh '''
                     npm install&&
-                    npm run test.js
+                    nodemon server.js
                     '''
                 }
             }
