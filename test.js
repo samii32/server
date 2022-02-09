@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer')
 const email = {
-    service: 'Naver',
-    host: "smtp.naver.com",
-    port: 587,
+    service: 'Google',
+    host: "smtp.gmail.com",
+    port: 465,
     auth: {
-        user: "smile_666@naver.com",
-        pass: "skehahffk2!!"
+        user: "shk9310@gmail.com",
+        pass: "tkdgus93.."
     }
 }
 const send = async (option) => {
@@ -20,7 +20,7 @@ const send = async (option) => {
 };
 
 let data = {
-    from: 'smile_666@naver.com',
+    from: 'shk9310@gmail.com',
     to: 'smile_666@naver.com',
     subject: 'test mail',
     text: 'node.js mail test'
