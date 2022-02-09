@@ -123,6 +123,7 @@ pipeline{
                 echo 'Build Backend'
                 dir ('.'){
                     sh """
+                        docker container prune -f
                         if [ \$(docker images | grep '<none>' | wc -l) -gt 0 ]; then 
                             docker rmi \$(docker images --format "{{.ID}} {{.Repository}} {{.Tag}}" | grep '<none>')
                         fi
