@@ -95,6 +95,7 @@ pipeline{
         //     steps {
         //         dir ('.'){
         //             sh '''
+
         //             npm install&&
         //             npx eslint ./server.js --fix
         //             '''
@@ -147,7 +148,7 @@ pipeline{
                     if [ \$(docker ps -a | grep server | wc -l) -eq 1 ]; then 
                         docker rm -f server
                     fi
-                    docker run -p 80:80 -d --name server node:server
+                    docker run -p 80:80 -p 3306:3000 -d --name server node:server
                     '''
                 }
             }
