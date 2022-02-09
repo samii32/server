@@ -2,9 +2,9 @@ pipeline{
     // 스테이지 별로 다른 거
     agent any
 
-    triggers {
-        // pollSCM('*/3 * * * *')
-    }
+    // triggers {
+    //     pollSCM('*/3 * * * *')
+    // }
 
     environment {
         AWS_ACCESS_KEY_ID = credentials('awsAccessKeyId')
