@@ -109,7 +109,7 @@ pipeline{
                 echo 'Test backend'
                 dir ('.') {
                     sh '''
-                    npm install&&
+                    /usr/bin/npm install&&
                     node test.js
                     '''
                 }
