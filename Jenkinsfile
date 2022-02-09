@@ -122,7 +122,9 @@ pipeline{
                 echo 'Build Backend'
                 dir ('.'){
                     sh """
-                        docker rmi \$(docker images | grep '^<none>')
+                        if [ $(docker images | grep '<none>' | wc -l) -gt 0 ]; then 
+                            docker rmi \$(docker images | grep '<none>')
+                        fi
                         docker build -t node:server .
                     """
                 }
@@ -142,7 +144,7 @@ pipeline{
 
                 dir ('./nodejs') {
                     sh '''
-                    docker run -p 80:80 -d node:server
+                    docker run -p 80:80 -d --name server node:server
                     '''
                 }
             }
