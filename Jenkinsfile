@@ -142,8 +142,11 @@ pipeline{
             steps {
                 echo 'Build Backend'
 
-                dir ('./nodejs') {
+                dir ('.') {
                     sh '''
+                    if [ \$(docker ps -a | grep server | wc -l) -eq 1 ]; then 
+                        docker rm -f server
+                    fi
                     docker run -p 80:80 -d --name server node:server
                     '''
                 }
