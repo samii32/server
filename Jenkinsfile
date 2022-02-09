@@ -84,19 +84,23 @@ pipeline{
             }
         }
 
-        stage('Lint Backend') {
-            // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
-            agent any
+        // stage('Lint Backend') {
+        //     // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
+        //     agent {
+        //         docker {
+        //             image 'node:latest'
+        //         }
+        //     }
 
-            steps {
-                dir ('.'){
-                    sh '''
-                    npm install&&
-                    npx eslint ./server.js --fix
-                    '''
-                }
-            }
-        }
+        //     steps {
+        //         dir ('.'){
+        //             sh '''
+        //             npm install&&
+        //             npx eslint ./server.js --fix
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Test Backend') {
             agent any
