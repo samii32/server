@@ -32,50 +32,37 @@ var pool = mysql.createPool({
 });
 
 app.post('/login', function (req, res) {
-    var info = req.body
-    console.log(info)
-    var ciphertext = CryptoJS.AES.encrypt(info.pw, 'secret key 123').toString()
-    console.log(ciphertext)
-
-    // pool.getConnection(function (err, connection) {
-    //     if (err) throw err;
-
-    //     connection.query('SELECT * from user', function (error, results, fields) {
-    //         console.log(fields)
-    //         res.send(JSON.stringify(results));
-    //         connection.release();
-        
-    //         if (error) throw error;
-    //     });
-    // });
+    const { id, pw } = req.body
+    // var ciphertext = CryptoJS.AES.encrypt(info.pw, 'secret key 123').toString()
+    var crypto_pw = CryptoJS.SHA256(pw).toString()
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query("SELECT * from user where id='"+id+"' and pw='"+crypto_pw+"'", function (error, results, fields) {
+        console.log(fields)
+        res.send(JSON.stringify(results));
+        connection.release();
+            if (error) throw error;
+      });
+    });
 });
 
-
 app.post('/signup', function (req, res) {
-    console.log('+++++++++++++++++++++++++++++++++++++++')
-    const {id, pw, email} = req.body    
-    console.log(req.body)
-    console.log(id,pw, email)
-    var ciphertext = CryptoJS.AES.encrypt(pw, 'secret key 123').toString()
-    console.log(ciphertext)
-    // var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
-    // var originalText = bytes.toString(CryptoJS.enc.Utf8)
-    // console.log(originalText)
-    console.log('+++++++++++++++++++++')
-    
-    // pool.getConnection(function (err, connection) {
-    //     if (err) throw err;
-    //     console.log('+++++++++++++++++++++++++++++++++++++++')
-    //     const {id, pw, pw2} = req.body
-    //     console.log(id, pw, pw2)
-    //     console.log('+++++++++++++++++++++')
-        // connection.query("insert into user (id,nm,pw,email) value('hi1','테스트','1111','sam@naver.com')", function (error, results, fields) {
-        //     console.log(results)
-        //     res.send(JSON.stringify(results));
-        //     connection.release();        
-        //     if (error) throw error;
-        // });
-   // });
+    console.log('--------')
+    const { id, pw, email } = req.body
+    // var crypto_pw = CryptoJS.AES.encrypt(pw, 'secret key 123').toString()
+    var crypto_pw = CryptoJS.SHA256(pw).toString()
+    // var a ='U2FsdGVkX1+9eDXTnJaoGRsUm6r1v9EIn7z26R3d304='
+    // var bytes = CryptoJS.AES.decrypt(a, 'secret key 123');
+    pool.getConnection(function (err, connection) {        
+        try {
+            connection.query("insert into user (id,nm,pw,email) value('" + id + "','" + id + "','" + crypto_pw + "','" + email + "')", function (error, results, fields) {
+            res.send(JSON.stringify(results));
+            connection.release();
+            });
+        } catch (error) {
+                console.log(error)
+        }
+    });
 });
 
 app.post('/send_email', function (req, res) {
@@ -90,4 +77,43 @@ app.post('/send_email', function (req, res) {
     }
     res.json({no:randNum})
     mailer.sendMyEmail(emailParam)
+});
+
+app.post('/searchUser', function (req, res) {
+    const { id } = req.body
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        try {
+            console.log('++'+id)
+            connection.query("SELECT * from user where id='" + id + "'", function (error, results, fields) {
+                console.log(fields)
+                res.send(JSON.stringify(results));
+                connection.release();
+                if (error) throw error;
+            });
+        }catch (error) {
+            console.log(error)
+        }
+    });
+});
+
+app.post('/addFriend', function (req, res) {
+    const { me, friend } = req.body
+    console.log(me, friend)
+    pool.getConnection(function (err, connection) {
+        try {
+            connection.query("insert into friend (user_no,friend_no) value('"+me+"','"+friend+"')", function (error, results, fields) {
+                console.log(results)
+                if (results) {
+                    res.send({stat:'OK'});    
+                } else {
+                    res.send({stat:'Fail'});    
+                }
+                
+                connection.release();
+            });
+        }catch (error) {
+            console.log(error)
+        }
+    });
 });
